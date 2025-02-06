@@ -5,6 +5,8 @@ import getpass
 import httpx
 from typing import Dict, Optional
 
+URI_LOGIN = "/services/auth/login"
+
 def get_token(splunk_url: str, splunk_username: Optional[str], 
               splunk_token: Optional[str], verify: bool = False) -> Optional[Dict[str, str]]:
     """
@@ -23,7 +25,7 @@ def get_token(splunk_url: str, splunk_username: Optional[str],
         return {"Authorization": f"Bearer {splunk_token}"}
 
     splunk_password = getpass.getpass(prompt='[?] Splunk Password: ')
-    auth_url = f"{splunk_url}/services/auth/login"
+    auth_url = splunk_url + URI_LOGIN
     auth_data = {
         'username': splunk_username,
         'password': splunk_password,
@@ -36,13 +38,9 @@ def get_token(splunk_url: str, splunk_username: Optional[str],
             response.raise_for_status()
             token = response.json()['sessionKey']
             return {"Authorization": f"Splunk {token}"}
-
     except httpx.HTTPStatusError as e:
-        print(f"[-] Authentication error - HTTP {e.response.status_code}: {e.response.text}")
-        return None
+        raise Exception(f"[-] Authentication error - HTTP {e.response.status_code}: {e.response.text}")
     except httpx.RequestError as e:
-        print(f"[-] Authentication error - Connection failed: {str(e)}")
-        return None
+        raise Exception(f"[-] Authentication error - Connection failed: {str(e)}")
     except KeyError as e:
-        print(f"[-] Authentication error - Unexpected response format: {str(e)}")
-        return None
+        raise Exception(f"[-] Authentication error - Unexpected response format: {str(e)}")

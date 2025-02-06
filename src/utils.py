@@ -31,20 +31,17 @@ def ensure_directory(directory: Union[str, Path]) -> Optional[str]:
 
         # Ensure the path is actually a directory
         if not dir_path.is_dir():
-            print(f"[-] Error: Path exists but is not a directory: {dir_path}")
-            return None
+            raise NotADirectoryError(f"Path exists but is not a directory: {dir_path}")
 
         # Convert to absolute path
         return str(dir_path.absolute())
 
     except PermissionError:
-        print(f"[-] Error: Permission denied when creating directory: {directory}")
-        return None
+        raise PermissionError(f"Permission denied when creating directory: {directory}")
     except OSError as e:
-        print(f"[-] Error creating directory {directory}: {str(e)}")
-        return None
+        raise OSError(f"Error creating directory: {directory}")
 
-def ssl_verify(verity) -> bool:
+def ssl_verify(verify) -> bool:
     """
     Check if SSL certificate verification is enabled.
 
@@ -55,7 +52,7 @@ def ssl_verify(verity) -> bool:
         bool: True if SSL certificate verification is enabled, False otherwise.
     """
     # Check if the configuration has a value for "splunk.verify"
-    if not verity:
+    if not verify:
         # Disable security warnings
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
         return verify

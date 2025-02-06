@@ -7,17 +7,17 @@ import os
 from urllib.parse import urljoin
 from typing import Any, Dict
 
-import authent as authent
-import config_manager
-from utils import ensure_directory, ssl_verify, str2bool
+import src.authent as authent
+import src.config_manager as config_manager
+from src.utils import ensure_directory, ssl_verify, str2bool
+
+URI_MAKEAPP = "/services/data/appmaker/makeapp"
+URI_DOWNLOADAPP = "/services/data/appmaker/downloadapp"
 
 routines = {
     "index_time_properties": "make_index_time_properties:makeIndexTimeProperties",
     "on_prem": "make_on_prem:makeOnPrem",
 }
-
-URL_MAKEAPP = "/services/data/appmaker/makeapp"
-URL_DOWNLOADAPP = "/services/data/appmaker/downloadapp"
 
 def download_app(splunk_url, headers, verify, app, output_dir, extension) -> None:
     """
@@ -52,7 +52,7 @@ def download_app(splunk_url, headers, verify, app, output_dir, extension) -> Non
         print("[-] Failed to create or access output directory. Exiting.")
         return
 
-    url = urljoin(splunk_url, URL_DOWNLOADAPP)
+    url = urljoin(splunk_url, URI_DOWNLOADAPP)
     params = {
         "namespace": app["namespace"],
         "filename": app["filename"]
@@ -91,7 +91,7 @@ def make_app(splunk_url, headers, verify, data) -> Dict[str, Any]:
     Raises:
         SystemExit: If the HTTP request fails with a status code other than 200.
     """
-    url = urljoin(splunk_url, URL_MAKEAPP)
+    url = urljoin(splunk_url, URI_MAKEAPP)
     try:
         with httpx.Client(verify=verify) as client:
             response = client.post(url, headers=headers, data=data)
@@ -133,7 +133,7 @@ def make_config() -> Dict[str, Any]:
     
     return config.config_data
 
-def set_data(config, routines) -> Dict[str, str]:
+def set_data(config, routines: dict) -> Dict[str, str]:
     """
     Generates a dictionary of data based on the provided configuration.
 
@@ -165,14 +165,11 @@ def main():
 
     config = make_config()
     url = config.get("splunk.url_mgmt")
-    verify = str2bool(ssl_verify(config.get("ssl.verify")))
+    verify = ssl_verify(str2bool(config.get("ssl.verify")))
 
     print(f"[+] Splunk URL: {config.get("splunk.url_mgmt")}")
 
     headers = authent.get_token(url, config.get("splunk.username"), config.get("splunk.token"))
-    if not headers:
-        print("[-] Authentication failed. Exiting.")
-        exit(1)
 
     data = set_data(config, routines)
     app = make_app(url, headers, verify, data)

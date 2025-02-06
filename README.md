@@ -1,28 +1,23 @@
 # Distributed Configuration Downloader
 
-This project is designed to download and manage distributed configurations for Splunk. It ensures that all configurations are up-to-date and synchronized across multiple instances.
-
-## Features
-
-- Download configurations from a central repository
-- Synchronize configurations across multiple Splunk instances
-- Ensure consistency and up-to-date configurations
+This repo is designed to download configuration elements that can be found in the Enterprise Security interface under General setting.
 
 ## Requirements
 
 - Python 3.x
-- Splunk SDK for Python
+- Splunk Enterprise
+- Splunk Enterprise Security
 - Network access to the central configuration repository
 
 ## Installation
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/distributed_configuration_downloader.git
+    git clone https://github.com/tsnaketech/splunk_distributed_configuration_downloader.git
     ```
 2. Navigate to the project directory:
     ```sh
-    cd distributed_configuration_downloader
+    cd splunk_distributed_configuration_downloader
     ```
 3. Install the required dependencies:
     ```sh
@@ -34,7 +29,11 @@ This project is designed to download and manage distributed configurations for S
 1. Configure the settings in `.env` file or in `.conf`,`.ini`,`.yaml`,`.yml` configuration file to match your environment.
 2. Run the downloader script:
     ```sh
-    python downloader.py -config config.yaml
+    python splunk_distributed_configuration_downloader --config config.yaml
+    ```
+
+    ```sh
+    python splunk_distributed_configuration_downloader\downloader.py --config config.yaml
     ```
     
     Possible parameters:
@@ -43,11 +42,11 @@ This project is designed to download and manage distributed configurations for S
 
 ## Configuration
 
-Sample configuration files are available with a `.sample` extension. You can use these as a starting point for your own configuration:
+Sample configuration files are available with a `.sample` extension in `sample` folder. You can use these as a starting point for your own configuration:
 
-- `.env.sample`
-- `config.ini.sample`
-- `config.yaml.sample`
+- `sample\.env.sample`
+- `sample\config.ini.sample`
+- `sample\config.yaml.sample`
 
 Make sure to customize these files to match your environment before running the downloader script.
 
