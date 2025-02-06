@@ -6,7 +6,7 @@ import configparser
 import os
 import yaml
 from dotenv import load_dotenv
-from typing import Any, Dict, Optional, Callable
+from typing import Any, Dict, Optional
 
 class ConfigurationManager:
     """A configuration manager that handles multiple configuration sources."""
