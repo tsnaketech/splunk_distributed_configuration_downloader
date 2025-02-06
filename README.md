@@ -35,10 +35,19 @@ This repo is designed to download configuration elements that can be found in th
     ```sh
     python splunk_distributed_configuration_downloader\downloader.py --config config.yaml
     ```
-    
-    Possible parameters:
-    - `--routine` (`-r`): Routine to execute. Choices are `index_time_properties`, `on_prem`.
-    - `--extension` (`-e`): Extension for the downloaded file. Choices are `spl`, `tar.gz`, `tgz`.
+
+### Arguments
+
+- `--config`,`-c`: Path to the configuration file .ini, .conf, .yaml or .yml.
+- `--url_mgmt`,`-u`: Splunk management URL. (Optional with --config)
+- `--token`,`-t`: Splunk authentication token. (Optional with --config)
+- `--username`,`-U`: Splunk username. If you need test your configuration file. (Optional)
+- `--routine`,`-r`: Routine to execute. Choices are `index_time_properties`, `on_prem`.
+- `--indexes`,`-i`: Index to include from all apps. (Optional)
+- `--properties`,`-p`: Properties to include from all apps. (Optional)
+- `--output`,`-o`: Output directory. (Optional)
+- `--extension`,`-e`: Extension for the downloaded file. Choices are `spl`, `tar.gz`, `tgz`.
+- `--verify`,`-v`: Verify the configuration file. (Optional)
 
 ## Configuration
 
