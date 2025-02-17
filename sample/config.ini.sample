@@ -1,5 +1,7 @@
 [splunk]
-url_mgmt = https://192.168.1.71:8089
+scheme = "https"
+host = "192.168.1.71"
+port = 8089
 token = "eyJraWQiOiJzcGx1bmsuc2VjcmV0IiwiYWxnIjoiSFM1MTIiLCJ2ZXIiOiJ2MiIsInR0eXAiOiJzdGF0aWMifQ.eyJpc3MiOiJhZG1pbiBmcm9tIHNwbHVuayIsInN1YiI6ImFkbWluIiwiYXVkIjoiZGQiLCJpZHAiOiJTcGx1bmsiLCJqdGkiOiI2OWI2ZTA3OWU5YTkzM2IyZmVjMzk3NzQ2MzU2ZDRkOWM3ZGM3YTI4MThiYzFiMzdhM2FiM2ZhZDVmMjhjZTBiIiwiaWF0IjoxNzM4Njk5NzkwLCJleHAiOjE3NDEyOTE3OTAsIm5iciI6MTczODY5OTc5MH0.zIz9wp4ryJlKm4lKm0K2_CT8s0r7cyr4cNVr89xUOmuKZ18ksfP0Bynyn1V_8bX8Lb0xdj5v7drm3WffPyFysA"
 
 [app]
