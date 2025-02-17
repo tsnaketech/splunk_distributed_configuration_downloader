@@ -1,0 +1,13 @@
+__pycache__
+*.ipynb
+
+# Configuration files
+*.conf
+*.ini
+*.yaml
+*.yml
+
+# Compressed files
+*.spl
+*.tar.gz
+*.tgz

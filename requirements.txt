@@ -1,0 +1,6 @@
+configparser
+httpx
+python-dotenv
+PyYAML
+splunk-sdk>=2.1.0
+urllib3
