@@ -2,12 +2,15 @@
 
 This directory is designed for downloading configuration items, which can be found in the Enterprise Security interface under General setting, then Distributed configuration management.
 
+![](assets/setting_distributed_configuration_management.png)
+
+![](assets/ta_for_indexers.png)
+
 ## Requirements
 
 - Python 3.x
 - Splunk Enterprise
 - Splunk Enterprise Security
-- Network access to the central configuration repository
 
 ## Installation
 
