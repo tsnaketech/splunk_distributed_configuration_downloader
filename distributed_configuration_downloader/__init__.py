@@ -10,8 +10,5 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 
-# Package version
-__version__ = '0.1.0'
-
 # Importing the main modules
-from distributed_configuration_downloader import *
+from . import *

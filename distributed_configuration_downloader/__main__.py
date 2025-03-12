@@ -4,7 +4,10 @@
 import logging
 import sys
 
-from distributed_configuration_downloader.downloader import main as downloader_main
+try:
+    from .downloader import main as downloader_main
+except ImportError:
+    from downloader import main as downloader_main
 
 def main():
     """
