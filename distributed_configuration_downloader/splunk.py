@@ -180,8 +180,6 @@ class DistributedConfigurationManagement():
         else:
             filename = PATH_DOWNLOADAPP.split("/")[-1] + "." + extension
 
-        filename = "Splunk_" + filename
-
         name, old_extension = os.path.splitext(filename)
         new_filename = name + '.' + extension
 
