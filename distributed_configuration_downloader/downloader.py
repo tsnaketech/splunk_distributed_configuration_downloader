@@ -4,8 +4,8 @@
 import argparse
 from typing import Any, Dict
 
-from . import config_manager, splunk
-from .utils import ssl_verify, str2bool
+import config_manager, splunk
+from utils import ssl_verify, str2bool
 
 routines = {
     #"content_pack": "make_content_pack:makeContentPack",
@@ -21,7 +21,6 @@ def make_config() -> Dict[str, Any]:
         Dictionary containing the configuration
     """
     config = config_manager.ConfigurationManager()
-    config.add_argument("--url_mgmt", "-u", type=str, help="Splunk host URL", required=False)
     config.add_argument("--scheme", "-S", type=str, help="Splunk host URL scheme", required=False)
     config.add_argument("--host", "-H", type=str, help="Splunk host URL", required=False)
     config.add_argument("--port", "-P", type=int, help="Splunk management port", required=False)
@@ -39,7 +38,7 @@ def make_config() -> Dict[str, Any]:
     config.set_config(section="ssl",key="verify", env_key="SSL_DCD_VERIFY", default=str(False))
     config.set_config(section="app",key="indexes", env_key="SPLUNK_DCD_INDEXES", default=str(False))
     config.set_config(section="app",key="properties", env_key="SPLUNK_DCD_PROPERTIES", default=str(False))
-    config.set_config_group(section="splunk", keys=["url_mgmt", "scheme", "host", "port", "username", "token"], env_prefix="SPLUNK_DCD")
+    config.set_config_group(section="splunk", keys=["scheme", "host", "port", "username", "token"], env_prefix="SPLUNK_DCD")
     config.set_config_group(section="app", keys=["extension", "routine", "output"], env_prefix="APP_DCD",)
 
     return config.config_data
