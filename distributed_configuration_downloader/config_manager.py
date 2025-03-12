@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 import argparse
@@ -8,10 +7,13 @@ import yaml
 from dotenv import load_dotenv
 from typing import Any, Dict, Optional
 
+class ConfigurationManagerError(Exception):
+    pass
+
 class ConfigurationManager:
     """A configuration manager that handles multiple configuration sources."""
 
-    def __init__(self, description: str = "Application configuration"):
+    def __init__(self, description: str = "Application configuration", **kwargs):
         """
         Initialize the configuration manager.
 
@@ -23,6 +25,7 @@ class ConfigurationManager:
         self.config_data: Dict[str, Any] = {}
         self.yaml_data: Dict[str, Any] = {}
         self.ini_data: Dict[str, Any] = {}
+        self.kwargs = kwargs
         self._load_env()
 
     def _load_env(self) -> None:
@@ -119,6 +122,9 @@ class ConfigurationManager:
             # Check environment variables
             os.getenv(env_key or key.upper()) or
 
+            # Check kwargs with section
+            (self.kwargs.get(section, {}).get(key) if section else self.kwargs.get(key)) or
+
             # Return default value
             default
         )
@@ -126,13 +132,16 @@ class ConfigurationManager:
         # Validate against choices if defined
         if valid_choices is not None:
             if value not in valid_choices:
-                raise ValueError(f"Invalid value '{value}' for {key}. Must be one of: {valid_choices}")
+                raise ConfigurationManagerError(f"Invalid value '{value}' for {key}. Must be one of: {valid_choices}")
 
-        self.config_data.setdefault(section, {})
-        self.config_data[section][key] = value
+        if section:
+            self.config_data.setdefault(section, {})
+            self.config_data[section][key] = value
+        else:
+            self.config_data[key] = value
         return value
 
-    def set_config_group(self, section: str, keys: list, env_prefix: str = "") -> Dict[str, Any]:
+    def set_config_group(self, section: str = "", keys: list = [], env_prefix: str = "") -> Dict[str, Any]:
         """
         Sets a configuration group by applying the set_config method to each key in the provided list.
 
