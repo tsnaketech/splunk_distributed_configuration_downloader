@@ -12,7 +12,7 @@ This directory is designed for downloading configuration items, which can be fou
 - Splunk Enterprise
 - Splunk Enterprise Security
 
-## Installation
+## Install
 
 1. Clone the repository:
 ```sh
